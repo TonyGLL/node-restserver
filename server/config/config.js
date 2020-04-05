@@ -30,7 +30,3 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 process.env.URLDB = urlDB;
-
-//mongodb://localhost:27017/cafe
-
-//mongodb://mongodb+srv://admin_data_base:BWeODBB6RD9tNTR7@cluster0-1am12.mongodb.net/cafe
