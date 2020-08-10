@@ -1,43 +1,24 @@
 require('./config/config');
+require('./connection');
 
 const express = require('express');
-const mongoose = require('mongoose');
-
 const path = require('path');
 
 const app = express();
 
-const bodyParser = require('body-parser');
+const routes = require('./routes/index');
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+// Settings
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// parse application/json
-app.use(bodyParser.json());
-
-// Habilitar carpeta PUBLIC
+// Enabled PUBLIC FILE
 app.use(express.static(path.resolve(__dirname, '../public')));
 
-// Configuracion Global de Routes
-app.use(require('./routes/index'));
+// Gloabl Routes Config
+app.use(routes);
 
-// Coneccion con Mongoose
-mongoose.connect(process.env.URLDB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-},
-
-    // Verificacion que la Base de Datos esta Online
-    (err, res) => {
-
-        if (err) throw err;
-
-        console.log('Base de datos ONLINE');
-    }
-);
-
-// Verifucacion de que el server esta activo
+// Active Server Verification
 app.listen(process.env.PORT, () => {
 
     console.log('Server on PORT:', process.env.PORT);
